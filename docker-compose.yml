@@ -1,0 +1,6 @@
+version: '3'
+services:
+  vulnerable-xxe-app:
+    build: .
+    ports:
+      - "5000:8080"

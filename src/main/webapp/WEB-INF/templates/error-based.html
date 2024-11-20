@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error-Based XXE Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<style>
+        /* Additional styles for dark mode */
+        body {
+            background-color: #121212;
+            color: #ffffff;
+			font-size: 24px;
+        }
+		/* Header styles (keep the font size unchanged for headers) */
+        h1, h2, h3, h4, h5, h6 {
+            font-size: inherit;
+        }
+        a {
+            color: #ffffff;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-primary:hover {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+		/* Dark Mode for Textarea */
+        .form-control {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #444444;
+			font-size: 24px;
+        }
+        .form-control::placeholder {
+            color: #bbbbbb;
+        }
+		/* Fix for the focus state */
+        .form-control:focus {
+            background-color: #333333; /* Same dark background */
+            color: #ffffff; /* Light text */
+            border-color: #bb86fc; /* Optional: Use a custom border color on focus */
+            outline: none; /* Remove the default outline */
+            box-shadow: none; /* Remove Bootstrap's default focus shadow */
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <h1 class="display-4">Error-Based XXE Demo</h1>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="POST" action="" class="mb-3">
+                <div class="mb-3">
+                    <label for="xmlInput" class="form-label">XML Input</label>
+                    <textarea class="form-control" id="xmlInput" name="xml" rows="10"
+                              th:text="${xmlContent}"> <!-- Dynamic XML content -->
+                    </textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Conditional Alert -->
+            <div class="alert" th:if="${content != null}"
+                 th:classappend="'alert-' + ${messageType == 'error' ? 'danger' : 'info'}">
+                <p th:text="${content}"></p>
+            </div>
+        </div>
+    </div>
+
+	<div class="row justify-content-center">
+        <div class="col-md-8">
+            <a href="/vulnerable-xxe-app/basic">Basic XXE</a> | <a href="/vulnerable-xxe-app/out-of-band">Out-Of-Band XXE</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
